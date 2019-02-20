@@ -7,7 +7,7 @@ You can install with either LuaRocks or the included Makefile.
 luarocks install luab64
 #+end_src
 ** Installing with Makefile
-#+begin_src 
+#+begin_src bash
 git clone https://github.com/ewestbrook/luab64
 cd luab64
 make && sudo make install
@@ -51,26 +51,22 @@ local r = table.concat(t)
 ** Simple Encode/Decode
 #+begin_src lua :exports both :results output
 local luab64 = require'luab64'
-
-local s = 'This is a string to encode!'
-local r = luab64.encode(s)
-local z = luab64.decode(r)
-
+local s = 'Encode this string!'
 print('input:   ' .. s)
-print('encoded: ' .. r)
-print('decoded: ' .. z)
+print('encoded: ' .. luab64.encode(s))
+print('decoded: ' .. luab64.decode(luab64.encode(s)))
 #+end_src
 
 #+RESULTS:
-: input:   This is a string to encode!
-: encoded: VGhpcyBpcyBhIHN0cmluZyB0byBlbmNvZGUh
-: decoded: This is a string to encode!
+: input:   Encode this string!
+: encoded: RW5jb2RlIHRoaXMgc3RyaW5nIQ==
+: decoded: Encode this string!
 ** LTN12 Filter Encoding
 #+begin_src lua :exports both :results output
 local luab64 = require'luab64'
 local ltn12  = require'ltn12'
 
-local s = 'String input to use for testing'
+local s = 'String for testing!'
 
 local encsrc = ltn12.source.string(s)
 local encfilter = luab64.encfilter()
@@ -90,6 +86,6 @@ print('decoded: ' .. z)
 #+end_src
 
 #+RESULTS:
-: input:   String input to use for testing
-: encoded: U3RyaW5nIGlucHV0IHRvIHVzZSBmb3IgdGVzdGluZw==
-: decoded: String input to use for testing
+: input:   String for testing!
+: encoded: U3RyaW5nIGZvciB0ZXN0aW5nIQ==
+: decoded: String for testing!
