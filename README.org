@@ -1,5 +1,5 @@
 # -*- org-confirm-babel-evaluate: nil -*-
-#+title: luab64: Light and Fast LTN12-compatible Base64 Encoding and Decoding in Lua
+#+title: luab64: Fast and Light Base64 Encoding, Decoding, and LTN12 filtering for Lua
 * Installataion
 LuaRocks or Makefile installations are supported.
 ** Installing with LuaRocks

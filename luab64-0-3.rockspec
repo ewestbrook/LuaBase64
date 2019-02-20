@@ -1,14 +1,14 @@
 package = "luab64"
-version = "0-2"
+version = "0-3"
 
 source = {
   url = "git://github.com/ewestbrook/luab64"
-  , tag = 'v0.2' }
+  , tag = 'v0.3' }
 
 dependencies = { "lua >= 5.1, < 5.4" }
 
 description = {
-  summary = 'luab64: Light and Fast LTN12-compatible Base64 Encoding and Decoding in Lua'
+  summary = 'Fast and Light Base64 Encoding, Decoding, and LTN12 filtering for Lua'
   , homepage = "https://github.com/ewestbrook/luab64"
   , license = 'MIT' }
 
