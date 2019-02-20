@@ -26,9 +26,9 @@ local r = luab64.decode(s)
 ** LTN12 Encode Filtering
 #+begin_src lua
 local ltn12 = require'ltn12'
-local luab64 = require'luab64'
 local src = ltn12.source.string(s)
 
+local luab64 = require'luab64'
 local filter = luab64.encfilter()
 
 local sink, t = ltn12.sink.table()
@@ -38,9 +38,9 @@ local r = table.concat(t)
 ** LTN12 Decode Filtering
 #+begin_src lua
 local ltn12 = require'ltn12'
-local luab64 = require'luab64'
 local src = ltn12.source.string(s)
 
+local luab64 = require'luab64'
 local filter = luab64.decfilter()
 
 local sink, t = ltn12.sink.table()
