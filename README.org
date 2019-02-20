@@ -48,38 +48,48 @@ ltn12.pump.all(ltn12.source.chain(src, filter), sink)
 local r = table.concat(t)
 #+end_src
 * Examples
+** Simple Encode/Decode
 #+begin_src lua :exports both :results output
 local luab64 = require'luab64'
 
-local s0 = 'This is a string to encode!'
-local s1 = 'This is a string to encode!!'
-local s2 = 'This is a string to encode!!!'
-local s3 = 'This is a string to encode!!!!'
+local s = 'This is a string to encode!'
+local r = luab64.encode(s)
+local z = luab64.decode(r)
 
-for _,s in ipairs{ s0, s1, s2, s3 } do
-  local r = luab64.encode(s)
-  local z = luab64.decode(r)
-  print('inp: ' .. s)
-  print('enc: ' .. r)
-  print('dec: ' .. z)
-  print() end
+print('input:   ' .. s)
+print('encoded: ' .. r)
+print('decoded: ' .. z)
 #+end_src
 
 #+RESULTS:
-#+begin_example
-inp: This is a string to encode!
-enc: VGhpcyBpcyBhIHN0cmluZyB0byBlbmNvZGUh
-dec: This is a string to encode!
+: input:   This is a string to encode!
+: encoded: VGhpcyBpcyBhIHN0cmluZyB0byBlbmNvZGUh
+: decoded: This is a string to encode!
+** LTN12 Filter Encoding
+#+begin_src lua :exports both :results output
+local luab64 = require'luab64'
+local ltn12  = require'ltn12'
 
-inp: This is a string to encode!!
-enc: VGhpcyBpcyBhIHN0cmluZyB0byBlbmNvZGUhIQ==
-dec: This is a string to encode!!
+local s = 'String input to use for testing'
 
-inp: This is a string to encode!!!
-enc: VGhpcyBpcyBhIHN0cmluZyB0byBlbmNvZGUhISE=
-dec: This is a string to encode!!!
+local encsrc = ltn12.source.string(s)
+local encfilter = luab64.encfilter()
+local encsink, t = ltn12.sink.table()
+ltn12.pump.all(ltn12.source.chain(encsrc, encfilter), encsink)
+local r = table.concat(t)
 
-inp: This is a string to encode!!!!
-enc: VGhpcyBpcyBhIHN0cmluZyB0byBlbmNvZGUhISEh
-dec: This is a string to encode!!!!
-#+end_example
+local decsrc = ltn12.source.string(r)
+local decfilter = luab64.decfilter()
+local decsink, u = ltn12.sink.table()
+ltn12.pump.all(ltn12.source.chain(decsrc, decfilter), decsink)
+local z = table.concat(u)
+
+print('input:   ' .. s)
+print('encoded: ' .. r)
+print('decoded: ' .. z)
+#+end_src
+
+#+RESULTS:
+: input:   String input to use for testing
+: encoded: U3RyaW5nIGlucHV0IHRvIHVzZSBmb3IgdGVzdGluZw==
+: decoded: String input to use for testing
