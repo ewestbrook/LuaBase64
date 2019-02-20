@@ -28,7 +28,9 @@ local r = luab64.decode(s)
 local ltn12 = require'ltn12'
 local luab64 = require'luab64'
 local src = ltn12.source.string(s)
+
 local filter = luab64.encfilter()
+
 local sink, t = ltn12.sink.table()
 ltn12.pump.all(ltn12.source.chain(src, filter), sink)
 local r = table.concat(t)
@@ -38,7 +40,9 @@ local r = table.concat(t)
 local ltn12 = require'ltn12'
 local luab64 = require'luab64'
 local src = ltn12.source.string(s)
+
 local filter = luab64.decfilter()
+
 local sink, t = ltn12.sink.table()
 ltn12.pump.all(ltn12.source.chain(src, filter), sink)
 local r = table.concat(t)
