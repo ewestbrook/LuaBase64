@@ -12,6 +12,10 @@ git clone https://github.com/ewestbrook/luab64
 cd luab64
 make && sudo make install
 #+end_src
+See the Makefile itself for options you can override with
+environment variables.  Notably, you can provide an
+`INST_PREFIX` value to specify somewhere other than the
+default installation path prefix.
 * Synopsis
 ** Encoding
 #+begin_src lua
