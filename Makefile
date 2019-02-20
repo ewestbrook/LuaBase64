@@ -12,25 +12,35 @@ INST_CONFDIR = $(INST_PREFIX)/etc
 INST_LIBDIR  = $(INST_PREFIX)/lib/lua/5.1
 INST_LUADIR  = $(INST_PREFIX)/share/lua/5.1
 # -------------------------------------------------------
-CFILES   := $(wildcard $(shell find src -name "*.c"))
+CFILES   := $(wildcard src/*.c)
 OBJS     := $(CFILES:.c=.o)
 DFILES   := $(CFILES:.c=.d)
 LUAFILES := $(wildcard src/*.lua)
 # -------------------------------------------------------
-src: c.so c.a
+TARGSO := src/luab64/c.so
+TARGA  := src/luab64/c.a
 # -------------------------------------------------------
-c.a: $(OBJS)
+src: $(TARGSO) $(TARGA)
+# -------------------------------------------------------
+$(TARGA): $(OBJS)
+	mkdir -pv $(dir $@)
 	ar rc $@ $(OBJS)
 # -------------------------------------------------------
-c.so: $(OBJS)
+$(TARGSO): $(OBJS)
+	mkdir -pv $(dir $@)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS)
 # -------------------------------------------------------
-install: c.so
+install: $(TARGSO) installlua installlib
+# -------------------------------------------------------
+installlua: $(LUAFILES)
+	cp -v $< $(INST_LUADIR)/
+# -------------------------------------------------------
+installlib: $(TARGSO)
 	mkdir -pv $(INST_LIBDIR)/luab64
 	cp -v $< $(INST_LIBDIR)/luab64/
 # -------------------------------------------------------
 clean:
-	@rm -vf $(shell find . -name '*.o' -o -name '*.so')
+	rm -vf $(OBJS) $(TARGSO) $(TARGA)
 # -------------------------------------------------------
-.PHONY: clean
+.PHONY: clean install
 # -------------------------------------------------------
