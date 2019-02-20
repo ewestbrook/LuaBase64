@@ -9,7 +9,7 @@ local r = luab64.encode(s)
 ** Decoding
 #+begin_src lua
 local luab64 = require'luab64'
-local r = luab64.encode(s)
+local r = luab64.decode(s)
 #+end_src
 ** LTN12 Encode Filtering
 #+begin_src lua
