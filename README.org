@@ -1,5 +1,17 @@
 # -*- org-confirm-babel-evaluate: nil -*-
 #+title: luab64: Light and Fast LTN12-compatible Base64 Encoding and Decoding in Lua
+* Installataion
+LuaRocks or Makefile installations are supported.
+** Installing with LuaRocks
+#+begin_src bash
+luarocks install luab64
+#+end_src
+** Installing with Makefile
+#+begin_src 
+git clone https://github.com/ewestbrook/luab64
+cd luab64
+make && sudo make install
+#+end_src
 * Synopsis
 ** Encoding
 #+begin_src lua

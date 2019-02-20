@@ -1,9 +1,9 @@
 package = "luab64"
-version = "0-0"
+version = "0-2"
 
 source = {
   url = "git://github.com/ewestbrook/luab64"
-  , tag = 'v0.1' }
+  , tag = 'v0.2' }
 
 dependencies = { "lua >= 5.1, < 5.4" }
 
