@@ -1,10 +1,10 @@
 -- -------------------------------------------------------
--- luab64.lua
+-- LuaBase64.lua
 -- Author: Eric Westbrook
 -- -------------------------------------------------------
 local _M = { __m=... }
 -- -------------------------------------------------------
-local C = require'luab64.c'
+local C = require'LuaBase64.c'
 -- -------------------------------------------------------
 local b64encinit = C.b64encinit
 local b64encupdate = C.b64encupdate

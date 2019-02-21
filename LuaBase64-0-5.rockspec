@@ -1,14 +1,14 @@
-package = "luab64"
-version = "0-4"
+package = "LuaBase64"
+version = "0-5"
 
 source = {
   url = "git://github.com/ewestbrook/luab64"
-  , tag = 'v0.4' }
+  , tag = 'v0.5' }
 
 dependencies = { "lua >= 5.1, < 5.4" }
 
 description = {
-  summary = 'Fast and Light Base64 Encoding, Decoding, and LTN12 filtering for Lua'
+  summary = 'Fast, Light Lua Base64 Encoding, Decoding, and Streaming'
   , homepage = "https://github.com/ewestbrook/luab64"
   , license = 'MIT' }
 
@@ -17,9 +17,9 @@ build = {
 
   , modules = {
 
-    luab64 = 'src/luab64.lua'
+    LuaBase64 = 'src/LuaBase64.lua'
 
-    , ['luab64.c'] = {
+    , ['LuaBase64.c'] = {
       'src/luab64.c'
       , 'src/b64enc.c'
       , 'src/b64dec.c' }}}

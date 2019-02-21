@@ -1,7 +1,7 @@
 // -------------------------------------------------------
-// luab64.c
+// LuaBase64.c
 // -------------------------------------------------------
-#include "luab64.h"
+#include "LuaBase64.h"
 // -------------------------------------------------------
 static const luaL_Reg funcs[] =
   {
@@ -12,7 +12,7 @@ static const luaL_Reg funcs[] =
    , { "b64decupdate"     , b64decupdate_lua }
    , { 0, 0 }};
 // -------------------------------------------------------
-LUALIB_API int luaopen_luab64_c(Lua* L) {
+LUALIB_API int luaopen_LuaBase64_c(Lua* L) {
 
   // register userdata metatables
   luaL_newmetatable(L, UDATSTRUCTB64E);
@@ -23,7 +23,7 @@ LUALIB_API int luaopen_luab64_c(Lua* L) {
   lua_newtable(L);
   luaL_setfuncs(L, funcs, 0);
 #else
-  luaL_register(L, "luab64.c", funcs);
+  luaL_register(L, "LuaBase64.c", funcs);
 #endif
 
   return(1); }

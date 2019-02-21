@@ -1,15 +1,15 @@
 # -*- org-confirm-babel-evaluate: nil -*-
-#+title: Fast and Light Base64 Encoding, Decoding, and LTN12 filtering for Lua
+#+title: Fast, Light Lua Base64 Encoding, Decoding, and Streaming
 * Installation
 You can install with either LuaRocks or the included Makefile.
 ** Installing with LuaRocks
 #+begin_src bash
-luarocks install luab64
+luarocks install LuaBase64
 #+end_src
 ** Installing with Makefile
 #+begin_src bash
-git clone https://github.com/ewestbrook/luab64
-cd luab64
+git clone https://github.com/ewestbrook/LuaBase64
+cd LuaBase64
 make && sudo make install
 #+end_src
 See the Makefile itself for options you can override with
@@ -19,21 +19,21 @@ path prefix.
 * Synopsis
 ** Encoding
 #+begin_src lua
-local luab64 = require'luab64'
-local r = luab64.encode(s)
+local LB64 = require'LuaBase64'
+local r = LB64.encode(s)
 #+end_src
 ** Decoding
 #+begin_src lua
-local luab64 = require'luab64'
-local r = luab64.decode(s)
+local LB64 = require'LuaBase64'
+local r = LB64.decode(s)
 #+end_src
 ** LTN12 Encode Filtering
 #+begin_src lua
 local ltn12 = require'ltn12'
 local src = ltn12.source.string(s)
 
-local luab64 = require'luab64'
-local filter = luab64.encfilter()
+local LB64 = require'LuaBase64'
+local filter = LB64.encfilter()
 
 local sink, t = ltn12.sink.table()
 ltn12.pump.all(ltn12.source.chain(src, filter), sink)
@@ -44,8 +44,8 @@ local r = table.concat(t)
 local ltn12 = require'ltn12'
 local src = ltn12.source.string(s)
 
-local luab64 = require'luab64'
-local filter = luab64.decfilter()
+local LB64 = require'LuaBase64'
+local filter = LB64.decfilter()
 
 local sink, t = ltn12.sink.table()
 ltn12.pump.all(ltn12.source.chain(src, filter), sink)
@@ -54,32 +54,33 @@ local r = table.concat(t)
 * Examples
 ** Simple Encode/Decode
 #+begin_src lua :exports both :results output
-local luab64 = require'luab64'
+local LB64 = require'LuaBase64'
 local s = 'Encode this string!'
 print('input:   ' .. s)
-print('encoded: ' .. luab64.encode(s))
-print('decoded: ' .. luab64.decode(luab64.encode(s)))
+print('encoded: ' .. LB64.encode(s))
+print('decoded: ' .. LB64.decode(LB64.encode(s)))
 #+end_src
 
 #+RESULTS:
 : input:   Encode this string!
 : encoded: RW5jb2RlIHRoaXMgc3RyaW5nIQ==
 : decoded: Encode this string!
-** LTN12 Filter Encoding
+
+** Streaming LTN12 Encode/Decode
 #+begin_src lua :exports both :results output
-local luab64 = require'luab64'
+local LB64 = require'LuaBase64'
 local ltn12  = require'ltn12'
 
 local s = 'String for testing!'
 
 local encsrc = ltn12.source.string(s)
-local encfilter = luab64.encfilter()
+local encfilter = LB64.encfilter()
 local encsink, t = ltn12.sink.table()
 ltn12.pump.all(ltn12.source.chain(encsrc, encfilter), encsink)
 local r = table.concat(t)
 
 local decsrc = ltn12.source.string(r)
-local decfilter = luab64.decfilter()
+local decfilter = LB64.decfilter()
 local decsink, u = ltn12.sink.table()
 ltn12.pump.all(ltn12.source.chain(decsrc, decfilter), decsink)
 local z = table.concat(u)

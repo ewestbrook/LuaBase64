@@ -17,8 +17,8 @@ OBJS     := $(CFILES:.c=.o)
 DFILES   := $(CFILES:.c=.d)
 LUAFILES := $(wildcard src/*.lua)
 # -------------------------------------------------------
-TARGSO := src/luab64/c.so
-TARGA  := src/luab64/c.a
+TARGSO := LuaBase64/c.so
+TARGA  := LuaBase64/c.a
 # -------------------------------------------------------
 src: $(TARGSO) $(TARGA)
 # -------------------------------------------------------
@@ -36,8 +36,8 @@ installlua: $(LUAFILES)
 	cp -v $< $(INST_LUADIR)/
 # -------------------------------------------------------
 installlib: $(TARGSO)
-	mkdir -pv $(INST_LIBDIR)/luab64
-	cp -v $< $(INST_LIBDIR)/luab64/
+	mkdir -pv $(INST_LIBDIR)/LuaBase64
+	cp -v $< $(INST_LIBDIR)/LuaBase64/
 # -------------------------------------------------------
 clean:
 	rm -vf $(OBJS) $(TARGSO) $(TARGA)
