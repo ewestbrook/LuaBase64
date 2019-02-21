@@ -3,7 +3,7 @@ all: src
 # -------------------------------------------------------
 CC       = gcc
 SHELL    = /bin/bash
-CFLAGS  += -O0 -ggdb -Wall -Werror -fPIC -I/usr/include/lua/5.1 -I/usr/include/lua5.1 -iquote.. -iquote../..
+CFLAGS  += -O2 -Wall -Werror -fPIC -I/usr/include/lua/5.1 -I/usr/include/lua5.1 -iquote.. -iquote../..
 LDFLAGS += -shared
 # -------------------------------------------------------
 INST_PREFIX  = /usr/local
