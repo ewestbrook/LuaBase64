@@ -1,9 +1,9 @@
 package = "LuaBase64"
-version = "0-6"
+version = "0-7"
 
 source = {
   url = "git://github.com/ewestbrook/LuaBase64"
-  , tag = 'v0.6' }
+  , tag = 'v0.7' }
 
 dependencies = { "lua >= 5.1, < 5.4" }
 
@@ -20,6 +20,6 @@ build = {
     LuaBase64 = 'src/LuaBase64.lua'
 
     , ['LuaBase64.c'] = {
-      'src/luab64.c'
+      'src/LuaBase64.c'
       , 'src/b64enc.c'
       , 'src/b64dec.c' }}}
