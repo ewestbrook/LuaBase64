@@ -1,9 +1,9 @@
 package = "LuaBase64"
-version = "0-7"
+version = "0-8"
 
 source = {
   url = "git://github.com/ewestbrook/LuaBase64"
-  , tag = 'v0.7' }
+  , tag = 'v0.8' }
 
 dependencies = { "lua >= 5.1, < 5.4" }
 
