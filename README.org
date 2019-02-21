@@ -4,7 +4,7 @@
 You can install with either LuaRocks or the included Makefile.
 ** Installing with LuaRocks
 #+begin_src bash
-luarocks install LuaBase64
+luarocks install luabase64
 #+end_src
 ** Installing with Makefile
 #+begin_src bash
