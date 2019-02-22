@@ -1,28 +1,35 @@
 # -------------------------------------------------------
 all: src
 # -------------------------------------------------------
-CC       = gcc
-SHELL    = /bin/bash
-CFLAGS  += -O2 -Wall -Werror -fPIC -I/usr/include/lua/5.1 -I/usr/include/lua5.1 -iquote.. -iquote../..
-LDFLAGS += -shared
+LUA_VERSION  ?= 5.1
+INST_PREFIX  ?= /usr/local
 # -------------------------------------------------------
-INST_PREFIX  = /usr/local
-INST_BINDIR  = $(INST_PREFIX)/bin
-INST_CONFDIR = $(INST_PREFIX)/etc
-INST_LIBDIR  = $(INST_PREFIX)/lib/lua/5.1
-INST_LUADIR  = $(INST_PREFIX)/share/lua/5.1
+CC            = gcc
+LDFLAGS      += -shared
 # -------------------------------------------------------
-CFILES   := $(wildcard src/*.c)
-OBJS     := $(CFILES:.c=.o)
-DFILES   := $(CFILES:.c=.d)
-LUAFILES := $(wildcard src/*.lua)
+CFLAGS       += -O2
+CFLAGS       += -Wall
+CFLAGS       += -Werror
+CFLAGS       += -fPIC
+CFLAGS       += -I/usr/include/lua/$(LUA_VERSION)
+CFLAGS       += -I/usr/include/lua$(LUA_VERSION)
 # -------------------------------------------------------
-TARGSO := LuaBase64/c.so
-TARGA  := LuaBase64/c.a
+INST_BINDIR   = $(INST_PREFIX)/bin
+INST_CONFDIR  = $(INST_PREFIX)/etc
+INST_LIBDIR   = $(INST_PREFIX)/lib/lua/$(LUA_VERSION)
+INST_LUADIR   = $(INST_PREFIX)/share/lua/$(LUA_VERSION)
 # -------------------------------------------------------
-src: $(TARGSO) $(TARGA)
+LUAFILES     := $(wildcard src/*.lua)
+CFILES       := $(wildcard src/*.c)
+OBJS         := $(CFILES:.c=.o)
+DFILES       := $(CFILES:.c=.d)
 # -------------------------------------------------------
-$(TARGA): $(OBJS)
+TARGSO       := LuaBase64/c.so
+TARGAR       := LuaBase64/c.a
+# -------------------------------------------------------
+src: $(TARGSO) $(TARGAR)
+# -------------------------------------------------------
+$(TARGAR): $(OBJS)
 	mkdir -pv $(dir $@)
 	ar rc $@ $(OBJS)
 # -------------------------------------------------------
@@ -40,7 +47,7 @@ installlib: $(TARGSO)
 	cp -v $< $(INST_LIBDIR)/LuaBase64/
 # -------------------------------------------------------
 clean:
-	rm -vf $(OBJS) $(TARGSO) $(TARGA)
+	rm -vf $(OBJS) $(TARGSO) $(TARGAR)
 # -------------------------------------------------------
 .PHONY: clean install
 # -------------------------------------------------------
