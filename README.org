@@ -94,3 +94,20 @@ print('decoded: ' .. z)
 : input:   String for testing!
 : encoded: U3RyaW5nIGZvciB0ZXN0aW5nIQ==
 : decoded: String for testing!
+#+begin_src lua :exports both :results output
+local ltn12 = require'ltn12'
+local LuaBase64 = require'LuaBase64'
+
+local s = 'SWYgeW91IGFyZSByZWFkaW5nIHRoaXMsIGJhc2U2NCBoYXMgYmVlbiBkZWNvZGVkLgo='
+local f = 'output.txt'
+
+local src = ltn12.source.string(s)
+local filter = LuaBase64.decfilter()
+local sink = ltn12.sink.file(io.open(f, 'w'))
+
+local filtersrc = ltn12.source.chain(src, filter)
+
+ltn12.pump.all(filtersrc, sink)
+#+end_src
+
+#+RESULTS:
